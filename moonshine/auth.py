@@ -1,20 +1,13 @@
 import requests
 from typing import Union
+import os
 
 
-class Auth:
-    def __init__(self, server_url='http://msws-auth-api'):
-        """
-        Specify auth api server to connect.
-        Default value is for docker environment.
+class auth:
+    api_url = os.environ.get('AUTH_API_URL', 'http://msws-auth-api')
 
-        :param server_url: auth api server url .
-        """
-        if server_url.endswith('/'):
-            server_url = server_url[:-1]
-        self._server_url = server_url
-
-    def get_token(self, username: str, password: str) -> (bool, str):
+    @classmethod
+    def get_token(cls, username: str, password: str) -> (bool, str):
         """
         Get auth token by moonshine AD account.
 
@@ -23,13 +16,14 @@ class Auth:
         :return: tuple(is_success, token/message).
         """
         resp = requests.post(
-            f'{self._server_url}/login',
+            f'{cls.api_url}/login',
             auth=(username, password)
         )
 
         return resp.ok, resp.text
 
-    def validate_token(self, token: str=None) -> (bool, Union[dict, str]):
+    @classmethod
+    def validate_token(cls, token: str=None) -> (bool, Union[dict, str]):
         """
         Check whether auth token is valid.
         Using cookie instead if token arg not specified.
@@ -46,7 +40,7 @@ class Auth:
 
         cookies = {'auth_token': token}
         resp = requests.get(
-            f'{self._server_url}/validate',
+            f'{cls.api_url}/validate',
             cookies=cookies
         )
 
@@ -54,7 +48,8 @@ class Auth:
             return True, resp.json()
         return False, resp.text
 
-    def get_user_info(self, token: str=None) -> (bool, Union[dict, str]):
+    @classmethod
+    def get_user_info(cls, token: str=None) -> (bool, Union[dict, str]):
         """
         Get user info by token.
         Using cookie instead if token arg not specified.
@@ -62,13 +57,13 @@ class Auth:
         :param token: user info to received.
         :return: tuple(is_success, user_info/message).
         """
-        result, data = self.validate_token(token)
+        result, data = cls.validate_token(token)
         if not result:
             return result, data
 
         cookies = {'auth_token': data['token']}
         resp = requests.get(
-            f'{self._server_url}/user',
+            f'{cls.api_url}/user',
             cookies=cookies
         )
 
