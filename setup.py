@@ -1,8 +1,8 @@
 import setuptools
 
 setuptools.setup(
-    name="moonshine-ELI",
-    version="0.0.1",
+    name="moonshine",
+    version="0.0.2",
     author="eli Hung",
     author_email="mrhchief@gmail.com",
     description="toolkit for moonshine node-server",

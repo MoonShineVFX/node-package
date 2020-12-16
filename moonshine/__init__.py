@@ -1,3 +1,1 @@
-class HelloWorld:
-    def say(self):
-        print('hello')
+from .auth import Auth
