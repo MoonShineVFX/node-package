@@ -2,7 +2,7 @@ import setuptools
 
 setuptools.setup(
     name="moonshine",
-    version="0.0.2",
+    version="0.0.3",
     author="eli Hung",
     author_email="mrhchief@gmail.com",
     description="toolkit for moonshine node-server",
