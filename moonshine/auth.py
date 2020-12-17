@@ -39,10 +39,16 @@ class auth:
             token = cookies['auth_token']
 
         cookies = {'auth_token': token}
-        resp = requests.get(
-            f'{cls.api_url}/validate',
-            cookies=cookies
-        )
+
+        try:
+            resp = requests.get(
+                f'{cls.api_url}/validate',
+                cookies=cookies
+            )
+        except requests.exceptions.ConnectionError as error:
+            raise requests.exceptions.ConnectionError(
+                'In dev environment? Use env "AUTH_API_URL" instead.'
+            ) from error
 
         if resp.ok:
             return True, resp.json()
