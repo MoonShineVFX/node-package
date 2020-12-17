@@ -1,13 +1,13 @@
 import setuptools
 
 setuptools.setup(
-    name="moonshine",
+    name="moonshine-node",
     version="0.0.4",
     author="eli Hung",
     author_email="mrhchief@gmail.com",
     description="toolkit for moonshine node-server",
     long_description="toolkit for moonshine node-server",
-    long_description_content_type="text",
+    long_description_content_type="text/plain",
     url="https://github.com/MoonShineVFX/node-package",
     packages=setuptools.find_packages(),
     classifiers=[
