@@ -2,7 +2,7 @@ import setuptools
 
 setuptools.setup(
     name="moonshine",
-    version="0.0.3",
+    version="0.0.4",
     author="eli Hung",
     author_email="mrhchief@gmail.com",
     description="toolkit for moonshine node-server",
@@ -18,6 +18,7 @@ setuptools.setup(
     python_requires='>=3.6',
     install_requires=[
         'Flask',
-        'requests'
+        'requests',
+        'pymongo'
     ]
 )
