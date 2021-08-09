@@ -34,9 +34,16 @@ class auth:
         if token is None:
             from flask import request
             cookies = request.cookies
-            if 'auth_token' not in cookies:
-                return False, 'No token in cookie.'
-            token = cookies['auth_token']
+            if 'auth_token' in cookies:
+                token = cookies['auth_token']
+            else:
+                authorization = request.headers.get('Authorization')
+                if authorization is None or not authorization.startswith('auth_token'):
+                    return 'No token founded.', 401
+                tokens = authorization.split()
+                if len(tokens) != 2:
+                    return 'invalid Authorization!', 401
+                token = tokens[1]
 
         cookies = {'auth_token': token}
 
