@@ -71,6 +71,8 @@ class auth:
         :return: tuple(is_success, user_info/message).
         """
         result, data = cls.validate_token(token)
+        if isinstance(result, str):
+            return False, result
         if not result:
             return result, data
 
